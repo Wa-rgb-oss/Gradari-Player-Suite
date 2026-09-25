@@ -82,7 +82,11 @@ document.getElementById('signupForm').addEventListener('submit',async e=>{
  if(d.password!==d.confirm){s.textContent='Passwords do not match.';return}
  s.textContent='Creating account...';
  try{
-  const data=await authRequest('/auth/v1/signup',{email:d.email,password:d.password});
+  const data=await authRequest('/auth/v1/signup',{
+    email:d.email,
+    password:d.password,
+    options:{emailRedirectTo:'https://wa-rgb-oss.github.io/Gradari-Player-Suite/login.html'}
+   });
   saveSession(data);
   if(data.access_token){s.textContent='Account created. Opening your dashboard...';setTimeout(()=>location.href='dashboard.html',500)}
   else{s.textContent='Account created. Check your email to confirm your account, then return here to log in.'}

@@ -14,37 +14,7 @@ label{display:block;margin:16px 0 6px;color:#d9c69d}input,textarea,select{width:
 button{background:#20242a;color:var(--text);border:1px solid #454a52;padding:10px 14px;cursor:pointer;font:inherit}.primary{background:var(--gold);border-color:var(--gold2);color:#0a0a0a;font-weight:bold}.danger{border-color:var(--red)}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.state{font-size:.85rem;color:var(--muted);margin:5px 0 14px}.step{border-left:2px solid var(--gold);padding-left:16px;margin:22px 0}.canonbox{white-space:pre-wrap;line-height:1.55;max-height:520px;overflow:auto;background:#0c0f12;border:1px solid var(--line);padding:18px}
 dialog{width:min(760px,94vw);background:#121519;color:var(--text);border:1px solid var(--gold);padding:0}.mh,.mf{padding:15px 18px;background:#171b20}.mb{padding:18px;white-space:pre-wrap;max-height:65vh;overflow:auto}.mf{text-align:right}
-@media(max-width:650px){
-  body{font-size:16px}
-  header{padding:20px 16px 16px}
-  header h1{font-size:28px;line-height:1.1}
-  header p{font-size:.9rem;line-height:1.45}
-  .tabs{padding:8px;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-  .tabs::-webkit-scrollbar{display:none}
-  .tab{padding:11px 12px;font-size:.82rem;min-height:44px}
-  main{padding:20px 12px 44px}
-  .card{padding:17px 15px;margin-bottom:14px}
-  .lead{font-size:1rem;line-height:1.55}
-  .grid{grid-template-columns:1fr;gap:0}
-  .subtabs{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-  .subtab{min-height:44px;padding:10px 7px;font-size:.78rem}
-  label{margin-top:14px}
-  input,textarea,select{font-size:16px;min-height:46px;padding:12px}
-  textarea{min-height:120px}
-  button{min-height:44px;padding:11px 13px}
-  .actions{display:grid;grid-template-columns:1fr;gap:8px}
-  .actions button{width:100%}
-  .step{padding-left:12px;margin:18px 0}
-  .canonbox{max-height:none;padding:15px;font-size:.94rem;line-height:1.6}
-  .commit-row{display:block!important}
-  .commit-row>div{margin-top:7px}
-  dialog{width:calc(100vw - 20px);max-height:90vh}
-  .mb{max-height:68vh;padding:15px}
-}
-@media(max-width:380px){
-  .subtabs{grid-template-columns:1fr}
-  .tab{font-size:.76rem;padding:10px 9px}
-}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.tabs{padding-left:10px;padding-right:10px}main{padding-left:16px;padding-right:16px}}
 </style></head><body>
 <header><h1>GRADARI MIRERIS</h1><p>PLAYER SUITE // Use the tabs below to join the game, create and manage records, reference the canon, and submit actions for Game Master review.</p></header>
 <nav class="tabs">
@@ -128,7 +98,7 @@ dialog{width:min(760px,94vw);background:#121519;color:var(--text);border:1px sol
 <div id="coverWrap" style="display:none"><label>Public Cover Story</label><textarea name="cover"></textarea></div>
 <div id="ordersWrap" style="display:none"><label>Orders</label><textarea name="orders" placeholder="Operational orders, instructions, restrictions, priorities, or command intent."></textarea></div>
 <label>Additional Notes</label><textarea name="notes"></textarea>
-<div class="actions"><button class="primary" type="submit">SAVE ACTION FILE</button><button type="button" data-preview>PREVIEW</button><button class="danger" type="button" data-clear>CLEAR</button></div><div class="state"></div></form></section>
+<div class="actions"><button class="primary" type="submit">SUBMIT ACTION</button><button type="button" data-preview>PREVIEW</button><button class="danger" type="button" data-clear>CLEAR</button></div><div class="state"></div></form></section>
 
 <section class="panel" id="canon"><div class="card"><h2>CANON REFERENCE</h2><p>This is a quick player reference, not a replacement for the full canon document. Use the full canon when exact doctrine, rank, history, or institutional detail matters.</p></div>
 <div class="canonbox"><strong>GRADARI MIRERIS: PLAYER REFERENCE</strong>
@@ -188,7 +158,11 @@ An unofficial political and financial bloc connected to elements of the Reserve 
 </section>
 
 </main><dialog id="preview"><div class="mh"><strong>RECORD PREVIEW</strong></div><div class="mb" id="previewText"></div><div class="mf"><button type="button" id="closePreview">CLOSE</button></div></dialog>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const SUPABASE_URL="https://tgszdvvitdiizkkbrlpl.supabase.co";
+const SUPABASE_KEY="sb_publishable_6GE5AFuO7AH1Ym7GU5qjoA_iUAoFAI2";
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const tabs=document.querySelectorAll('.tab'),panels=document.querySelectorAll('.panel');
 tabs.forEach(b=>b.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));panels.forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active')}));
 const subtabs=document.querySelectorAll('.subtab'),regsections=document.querySelectorAll('.registration-section');
@@ -199,7 +173,7 @@ function formData(form){const o={};new FormData(form).forEach((v,k)=>o[k]=v);for
 function textFor(form){const d=formData(form),kind=form.dataset.kind,stamp=new Date().toLocaleString(),lines=[`GRADARI MIRERIS — ${kind.toUpperCase()} RECORD`,`Submitted: ${stamp}`];Object.entries(d).forEach(([k,v])=>{if(k==='commit'){lines.push('\\nCOMMITMENTS');v.forEach((x,i)=>lines.push(`${i+1}. ${x.item}${x.detail?' — '+x.detail:''}`));}else if(typeof v!=='boolean')lines.push(`\\n${k.replace(/_/g,' ').toUpperCase()}\\n${v||'Not specified'}`);else lines.push(`\\n${k.toUpperCase()}: ${v?'YES':'NO'}`)});return lines.join('\\n')}
 function saveLocal(form){localStorage.setItem('gm_suite_'+form.dataset.kind,JSON.stringify(formData(form)));const s=form.querySelector('.state');if(s)s.textContent='Draft saved locally • '+new Date().toLocaleTimeString()}
 function loadLocal(form){try{const d=JSON.parse(localStorage.getItem('gm_suite_'+form.dataset.kind));if(!d)return;Object.entries(d).forEach(([k,v])=>{if(k==='commit')return;const e=form.elements[k];if(!e)return;if(e.type==='checkbox')e.checked=!!v;else e.value=v})}catch(e){}}
-document.querySelectorAll('form[data-kind]').forEach(form=>{loadLocal(form);form.addEventListener('input',()=>saveLocal(form));form.addEventListener('change',()=>saveLocal(form));form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const d=formData(form),title=d.name||d.player||form.dataset.kind,blob=new Blob([textFor(form)],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='GM_'+form.dataset.kind.toUpperCase()+'_'+clean(title)+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)});form.querySelector('[data-preview]').addEventListener('click',()=>{document.getElementById('previewText').textContent=textFor(form);document.getElementById('preview').showModal()});form.querySelector('[data-clear]').addEventListener('click',()=>{if(confirm('Clear this draft?')){form.reset();localStorage.removeItem('gm_suite_'+form.dataset.kind);if(form.dataset.kind==='action'){document.getElementById('commitList').innerHTML='';addCommit()}form.querySelector('.state').textContent='Draft cleared.'}})});
+document.querySelectorAll('form[data-kind]').forEach(form=>{loadLocal(form);form.addEventListener('input',()=>saveLocal(form));form.addEventListener('change',()=>saveLocal(form));form.addEventListener('submit',async e=>{e.preventDefault();if(!form.reportValidity())return;const d=formData(form);if(form.dataset.kind==='action'){const state=form.querySelector('.state');state.textContent='Submitting action...';const payload={player:d.player||null,action_name:d.name||null,category:d.category||null,target:d.target||null,objective:d.objective||null,method:d.method||null,commitment:JSON.stringify(d.commit||[]),intent:d.intent||null,secret:!!d.secret,cover:d.cover||null,orders:d.orders||null,notes:d.notes||null,status:'pending'};const {error}=await sb.from('actions_tab').insert([payload]);if(error){console.error(error);state.textContent='Submission failed: '+error.message;return;}state.textContent='Action submitted successfully to the Game Master.';localStorage.removeItem('gm_suite_action');form.reset();document.getElementById('commitList').innerHTML='';addCommit();conditional();return;}const title=d.name||d.player||form.dataset.kind,blob=new Blob([textFor(form)],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='GM_'+form.dataset.kind.toUpperCase()+'_'+clean(title)+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)});form.querySelector('[data-preview]').addEventListener('click',()=>{document.getElementById('previewText').textContent=textFor(form);document.getElementById('preview').showModal()});form.querySelector('[data-clear]').addEventListener('click',()=>{if(confirm('Clear this draft?')){form.reset();localStorage.removeItem('gm_suite_'+form.dataset.kind);if(form.dataset.kind==='action'){document.getElementById('commitList').innerHTML='';addCommit()}form.querySelector('.state').textContent='Draft cleared.'}})});
 document.getElementById('closePreview').addEventListener('click',()=>document.getElementById('preview').close());
 function addCommit(item='',detail=''){const row=document.createElement('div');row.className='grid commit-row';row.style.marginBottom='8px';row.innerHTML='<input class="ci" placeholder="Asset / resource / personnel"><div style="display:flex;gap:6px"><input class="cd" placeholder="Amount / detail"><button type="button" class="danger">REMOVE</button></div>';row.querySelector('.ci').value=item;row.querySelector('.cd').value=detail;row.querySelector('button').addEventListener('click',()=>{row.remove();saveLocal(document.querySelector('form[data-kind=action]'))});row.addEventListener('input',()=>saveLocal(document.querySelector('form[data-kind=action]')));document.getElementById('commitList').appendChild(row)}
 document.getElementById('addCommit').addEventListener('click',()=>addCommit());addCommit();

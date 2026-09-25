@@ -34,13 +34,6 @@ dialog{width:min(760px,94vw);background:#121519;color:var(--text);border:1px sol
 
 <section class="panel" id="newplayers">
 <div class="card"><h2>REGISTRATION</h2><p>Use these forms to enter the game and establish your place in the universe. Begin with Player Registration, then complete additional records as they become relevant.</p></div>
-<div class="subtabs">
-<button class="subtab active" type="button" data-subtab="join">PLAYER REGISTRATION</button>
-<button class="subtab" type="button" data-subtab="character">CHARACTER</button>
-<button class="subtab" type="button" data-subtab="faction">FACTION</button>
-<button class="subtab" type="button" data-subtab="colony">COLONY</button>
-<button class="subtab" type="button" data-subtab="treaty">TREATY</button>
-</div>
 <section class="registration-section active" id="join"><div class="card"><h2>NEW PLAYER REGISTRATION</h2><p>Tell the Game Master who you are, what interests you, and where you might fit into Gradari Mireris. If you are already an established player, you do not need to complete this registration again.</p></div>
 <form data-kind="join">
 <div class="grid"><div><label>Discord Username *</label><input name="player" required></div><div><label>Preferred Name</label><input name="preferred"></div></div>
@@ -51,40 +44,6 @@ dialog{width:min(760px,94vw);background:#121519;color:var(--text);border:1px sol
 <label>What would you like to get out of the game?</label><textarea name="goals"></textarea>
 <label>Additional Notes</label><textarea name="notes"></textarea>
 <div class="actions"><button class="primary" type="submit">SUBMIT REGISTRATION</button><button type="button" data-preview>PREVIEW</button><button class="danger" type="button" data-clear>CLEAR</button></div><div class="state"></div></form></section>
-
-<section class="registration-section" id="character"><div class="card"><h2>CHARACTER REGISTRATION</h2><p>Register a Main or Side Character for Game Master review.</p></div>
-<form data-kind="character">
-<div class="grid"><div><label>Player / Discord Username *</label><input name="player" required></div><div><label>Character Type *</label><select name="type" required><option value="">Select one</option><option>Main Character</option><option>Side Character</option></select></div></div>
-<div class="grid"><div><label>Character Name *</label><input name="name" required></div><div><label>Faction / Affiliation *</label><input name="faction" required></div></div>
-<div class="grid"><div><label>Role / Position *</label><input name="role" required></div><div><label>Current Location</label><input name="location"></div></div>
-<label>Short Background *</label><textarea name="background" required></textarea><label>Personality</label><textarea name="personality"></textarea>
-<label>Loyalties & Relationships</label><textarea name="relations"></textarea><label>Ambitions / Goals</label><textarea name="goals"></textarea>
-<label>Limitations / Weaknesses</label><textarea name="limits"></textarea><label>Additional Notes</label><textarea name="notes"></textarea>
-<label class="check"><input type="checkbox" name="ack" required><span>I understand this character must fit established canon and does not automatically possess unapproved knowledge, authority, assets, or abilities.</span></label>
-<div class="actions"><button class="primary" type="submit">SAVE CHARACTER FILE</button><button type="button" data-preview>PREVIEW</button><button class="danger" type="button" data-clear>CLEAR</button></div><div class="state"></div></form></section>
-
-<section class="registration-section" id="faction"><div class="card"><h2>FACTION CREATION</h2><p>Propose a new organized power. A submission is a proposal and does not become canon until approved.</p></div>
-<form data-kind="faction"><div class="grid"><div><label>Player *</label><input name="player" required></div><div><label>Faction Name *</label><input name="name" required></div></div>
-<div class="grid"><div><label>Faction Type *</label><input name="type" required></div><div><label>Leader / Representative</label><input name="leader"></div></div>
-<label>Concept / Purpose *</label><textarea name="concept" required></textarea><label>Territory / Area of Operation</label><textarea name="territory"></textarea>
-<label>Resources & Capabilities</label><textarea name="resources"></textarea><label>Goals / Interests *</label><textarea name="goals" required></textarea>
-<label>Relationships</label><textarea name="relations"></textarea><label>Additional Notes</label><textarea name="notes"></textarea>
-<label class="check"><input type="checkbox" name="ack" required><span>I understand this proposal requires Game Master review before becoming part of active canon.</span></label>
-<div class="actions"><button class="primary" type="submit">SAVE FACTION FILE</button><button type="button" data-preview>PREVIEW</button><button class="danger" type="button" data-clear>CLEAR</button></div><div class="state"></div></form></section>
-
-<section class="registration-section" id="colony"><div class="card"><h2>COLONY ESTABLISHMENT</h2><p>Record an attempt to establish a colony. The Game Master resolves the actual outcome.</p></div>
-<form data-kind="colony"><div class="grid"><div><label>Player *</label><input name="player" required></div><div><label>Faction *</label><input name="faction" required></div></div>
-<div class="grid"><div><label>Proposed Colony Name *</label><input name="name" required></div><div><label>Location / System *</label><input name="location" required></div></div>
-<label>Purpose *</label><textarea name="purpose" required></textarea><label>Resources Being Committed *</label><textarea name="resources" required></textarea>
-<label>Establishment Plan *</label><textarea name="plan" required></textarea><label>Additional Notes</label><textarea name="notes"></textarea>
-<div class="actions"><button class="primary" type="submit">SAVE COLONY FILE</button><button type="button" data-preview>PREVIEW</button><button class="danger" type="button" data-clear>CLEAR</button></div><div class="state"></div></form></section>
-
-<section class="registration-section" id="treaty"><div class="card"><h2>TREATY REQUEST</h2><p>Create a simple record of an agreement between powers.</p></div>
-<form data-kind="treaty"><div class="grid"><div><label>Submitting Player *</label><input name="player" required></div><div><label>Treaty / Agreement Name *</label><input name="name" required></div></div>
-<div class="grid"><div><label>Party One *</label><input name="party1" required></div><div><label>Party Two *</label><input name="party2" required></div></div>
-<label>Agreement Type</label><select name="type"><option>General Agreement</option><option>Alliance</option><option>Trade Agreement</option><option>Ceasefire</option><option>Non-Aggression Agreement</option><option>Military Cooperation</option><option>Other</option></select>
-<label>Terms *</label><textarea name="terms" required></textarea><label>Duration / End Condition</label><input name="duration"><label>Additional Notes</label><textarea name="notes"></textarea>
-<div class="actions"><button class="primary" type="submit">SAVE TREATY FILE</button><button type="button" data-preview>PREVIEW</button><button class="danger" type="button" data-clear>CLEAR</button></div><div class="state"></div></form></section>
 
 </section>
 

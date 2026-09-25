@@ -4,7 +4,7 @@
 <style>
 :root{--bg:#0b0d0f;--panel:#121519;--panel2:#171b20;--text:#e8e3d8;--muted:#9b9b96;--line:#30343a;--gold:#a9782b;--gold2:#d1a657;--red:#7d302c}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Georgia,"Times New Roman",serif}
-header{padding:28px 5vw 20px;border-bottom:1px solid var(--line);background:#0e1114}header h1{margin:0;color:var(--gold2);letter-spacing:.08em;font-size:clamp(25px,4vw,42px)}
+header{padding:28px 5vw 20px;border-bottom:1px solid var(--line);background:#0e1114;position:relative}header h1{margin:0;color:var(--gold2);letter-spacing:.08em;font-size:clamp(25px,4vw,42px)}
 header p{color:var(--muted);margin:8px 0 0}.tabs{display:flex;gap:5px;overflow-x:auto;padding:10px 5vw;background:#101317;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:3}
 .tab{white-space:nowrap;background:transparent;color:var(--muted);border:1px solid transparent;padding:10px 13px;cursor:pointer;font:inherit}.tab.active{color:var(--gold2);border-color:var(--gold);background:#17191b}.subtabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 22px}.subtab{font-size:.9rem;background:#121519;color:var(--muted);border:1px solid var(--line)}.subtab.active{color:var(--gold2);border-color:var(--gold)}.registration-section{display:none}.registration-section.active{display:block}
 main{max-width:1000px;margin:auto;padding:30px 5vw 60px}.panel{display:none}.panel.active{display:block}.card{background:var(--panel);border:1px solid var(--line);padding:22px;margin:0 0 18px}
@@ -14,9 +14,10 @@ label{display:block;margin:16px 0 6px;color:#d9c69d}input,textarea,select{width:
 button{background:#20242a;color:var(--text);border:1px solid #454a52;padding:10px 14px;cursor:pointer;font:inherit}.primary{background:var(--gold);border-color:var(--gold2);color:#0a0a0a;font-weight:bold}.danger{border-color:var(--red)}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.state{font-size:.85rem;color:var(--muted);margin:5px 0 14px}.step{border-left:2px solid var(--gold);padding-left:16px;margin:22px 0}.canonbox{white-space:pre-wrap;line-height:1.55;max-height:520px;overflow:auto;background:#0c0f12;border:1px solid var(--line);padding:18px}
 dialog{width:min(760px,94vw);background:#121519;color:var(--text);border:1px solid var(--gold);padding:0}.mh,.mf{padding:15px 18px;background:#171b20}.mb{padding:18px;white-space:pre-wrap;max-height:65vh;overflow:auto}.mf{text-align:right}
-@media(max-width:650px){.grid{grid-template-columns:1fr}.tabs{padding-left:10px;padding-right:10px}main{padding-left:16px;padding-right:16px}}
+.login-button{position:absolute;top:28px;right:5vw;background:transparent;color:var(--gold2);border:1px solid var(--gold);padding:9px 16px;text-decoration:none;font:inherit;cursor:pointer}.login-button:hover{background:#17191b}
+@media(max-width:650px){.login-button{top:18px;right:16px}.grid{grid-template-columns:1fr}.tabs{padding-left:10px;padding-right:10px}main{padding-left:16px;padding-right:16px}}
 </style></head><body>
-<header><h1>GRADARI MIRERIS</h1><p>PLAYER SUITE // Use the tabs below to join the game, create and manage records, reference the canon, and submit actions for Game Master review.</p></header>
+<header><h1>GRADARI MIRERIS</h1><a class="login-button" href="login.html">LOGIN</a><p>PLAYER SUITE // Use the tabs below to join the game, create and manage records, reference the canon, and submit actions for Game Master review.</p></header>
 <nav class="tabs">
 <button class="tab active" data-tab="home">HOME</button><button class="tab" data-tab="newplayers">REGISTRATION</button><button class="tab" data-tab="actions">SUBMIT ACTIONS</button><button class="tab" data-tab="canon">CANON REFERENCE</button><button class="tab" type="button" onclick="window.location.href='admin.html'">ADMIN</button>
 </nav><main>
